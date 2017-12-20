@@ -32,7 +32,7 @@ public class Node {
     }
 
     public String toString(){
-        String str = new String ("this peer : " + this.peer.toString() + " ");
+        String str = new String ("this peer : " + this.peer.toString() + "\n" + "known peers :\n");
         for (Peer p : onlinePeers) {
             str += p.toString()+"\n";
         }
