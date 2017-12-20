@@ -43,6 +43,8 @@ public class Homepage extends JFrame{
         JButton changeNameButton = new JButton("Change Name");
         changeNameButton.addActionListener(e -> onChangeNameButtonClicked());
 
+        JButton logoutButton = new JButton("Logout");
+        logoutButton.addActionListener(e -> onLogoutButtonClicked());
 
         JPanel buttonPane = buildJPanelWith(startChatButton, updateButton, changeNameButton);
 
@@ -91,6 +93,22 @@ public class Homepage extends JFrame{
         list.setModel(listModel);
     }
 
+    private void onLogoutButtonClicked() {
+//        this.node.getPeer().getDatagramSocket().close();
+
+        this.setVisible(false);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.dispose();
+
+        try {
+            ui.display();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     //TODO address already in use
     private void onChangeNameButtonClicked() {
         this.setVisible(false);
@@ -114,6 +132,12 @@ public class Homepage extends JFrame{
             this.setVisible(false);
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             this.dispose();
+
+            int index ;
+            index = list.getSelectedIndex();
+            Chat chat = new Chat(this, node, index);
+            chat.display();
+
         }
 
     }
