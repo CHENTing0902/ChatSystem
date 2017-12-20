@@ -1,7 +1,7 @@
 package com.insa.network.service;
 
-import com.insa.Model.Node;
-import com.insa.Model.Peer;
+import com.insa.model.Node;
+import com.insa.model.Peer;
 import com.insa.network.handler.UDPSenderHandler;
 
 public class UDPMessageSenderService implements MessageSenderService {

@@ -1,7 +1,7 @@
 package com.insa.ui;
 
 
-import com.insa.Model.Node;
+import com.insa.model.Node;
 import com.insa.network.service.UDPMessageSenderService;
 
 import javax.swing.*;

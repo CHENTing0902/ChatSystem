@@ -1,7 +1,6 @@
 package com.insa.Message;
 
-import com.insa.Model.Node;
-import com.insa.Model.Peer;
+import com.insa.model.*;
 
 import java.net.UnknownHostException;
 

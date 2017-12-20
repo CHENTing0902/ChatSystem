@@ -1,7 +1,6 @@
 package com.insa.network.service;
 
-import com.insa.Model.Node;
-import com.insa.Model.Peer;
+import com.insa.model.Peer;
 import com.insa.network.handler.TCPSenderHandler;
 
 public class TCPMessageSenderService implements MessageSenderService {

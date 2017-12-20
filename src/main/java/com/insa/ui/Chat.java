@@ -1,7 +1,7 @@
 package com.insa.ui;
 
-import com.insa.Model.Node;
-import com.insa.Model.Peer;
+import com.insa.model.Node;
+import com.insa.model.Peer;
 import com.insa.network.service.UDPMessageSenderService;
 
 import javax.swing.*;
@@ -120,6 +120,7 @@ public class Chat extends JFrame {
         if(text.trim().isEmpty()) return;
 
         System.out.println(text);
+
         // Otherwise, append text with a new line
         chatWindow.append(text+"\n");
 
@@ -155,7 +156,7 @@ public class Chat extends JFrame {
 
         int returnVal = chooser.showOpenDialog(null);
         if(returnVal == JFileChooser.APPROVE_OPTION) {
-            System.out.println("You chose to open this file: " +
+            System.out.println("Open this file: " +
                     chooser.getSelectedFile().getName());
         }
 

@@ -1,7 +1,7 @@
 package com.insa.network.handler;
 
 import com.insa.Message.MessageFactory;
-import com.insa.Model.*;
+import com.insa.model.*;
 
 import java.io.IOException;
 import java.net.DatagramPacket;

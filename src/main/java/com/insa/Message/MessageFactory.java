@@ -1,6 +1,6 @@
 package com.insa.Message;
 
-import com.insa.Model.Node;
+import com.insa.model.Node;
 
 import java.io.IOException;
 

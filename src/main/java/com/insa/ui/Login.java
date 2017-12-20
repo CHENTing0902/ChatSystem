@@ -1,6 +1,6 @@
 package com.insa.ui;
 
-import com.insa.Model.*;
+import com.insa.model.*;
 import com.insa.network.handler.BroadcastListenerHandler;
 import com.insa.network.service.UDPMessageSenderService;
 

@@ -1,6 +1,6 @@
 package com.insa.network.handler;
 
-import com.insa.Model.Peer;
+import com.insa.model.Peer;
 import com.insa.network.IncomingMessageListener;
 
 import java.io.IOException;

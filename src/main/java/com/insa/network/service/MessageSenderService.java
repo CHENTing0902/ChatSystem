@@ -1,7 +1,6 @@
 package com.insa.network.service;
 
-import com.insa.Model.Node;
-import com.insa.Model.Peer;
+import com.insa.model.Peer;
 
 public interface MessageSenderService {
 

@@ -80,7 +80,7 @@ public class Message {
         return integer;
     }
 
-    public static byte[] builtMessage(String type, String message) throws IOException {
+    public static byte[] buildMessage(String type, String message) throws IOException {
 
         byte[] typeMessage = type.getBytes();
         byte[] data = message.getBytes();
@@ -93,7 +93,5 @@ public class Message {
 
         return outputStream.toByteArray( );
     }
-
-    //TODO Implements
 }
 
