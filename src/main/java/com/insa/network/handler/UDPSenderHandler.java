@@ -15,8 +15,7 @@ public class UDPSenderHandler implements Runnable {
 
 
     // TODO create message class
-    public UDPSenderHandler(Peer peer, String message) throws IOException {
-        byte[] c = Message.buildMessage("MESS",message);
+    public UDPSenderHandler(Peer peer, byte[] c) throws IOException {
 
         senderSocket = new DatagramSocket();
         datagramPacket = new DatagramPacket(c,c.length);
@@ -29,6 +28,7 @@ public class UDPSenderHandler implements Runnable {
      * constructor for broadcast send
      */
     public UDPSenderHandler(Node node) throws IOException {
+
         byte[] c = Message.buildMessage("JOIN",node.getPeer().getPseudonyme());
 
         senderSocket = new DatagramSocket();

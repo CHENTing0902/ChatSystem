@@ -10,9 +10,9 @@ public class TCPSenderHandler implements Runnable {
 
     private Socket chatSocket;
     private PrintWriter writer;
-    private String message;
+    private byte [] message;
 
-    public TCPSenderHandler(Peer peer, String message) throws IOException {
+    public TCPSenderHandler(Peer peer, byte [] message) throws IOException {
         this.chatSocket = new Socket (peer.getHost(), peer.getPort());
         this.writer = new PrintWriter(chatSocket.getOutputStream());
         this.message = message;

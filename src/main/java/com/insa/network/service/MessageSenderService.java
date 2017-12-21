@@ -10,5 +10,5 @@ public interface MessageSenderService {
      * @param message   the message to send to peer
      * @throws Exception
      */
-    void sendMessageOn(Peer peer, String message) throws Exception;
+    void sendMessageOn(Peer peer, byte [] message) throws Exception;
 }
