@@ -1,4 +1,4 @@
-package com.insa.Model;
+package com.insa.model;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -41,5 +41,21 @@ public class Node {
 
     public String userName(){
         return this.peer.getPseudonyme();
+    }
+
+    public void updatePeersList(Peer peer){
+        for (int i = 0; i < onlinePeers.size(); i++){
+            if (onlinePeers.get(i).getHost().equals(peer.getHost())){
+                if (onlinePeers.get(i).getPseudonyme().equals(peer.getPseudonyme())) {
+                    return;
+                }
+                else{
+                    onlinePeers.get(i).setPseudonyme(peer.getPseudonyme());
+                    return;
+                }
+            }
+        }
+        onlinePeers.add(peer);
+
     }
 }
