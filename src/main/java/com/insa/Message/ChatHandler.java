@@ -19,6 +19,7 @@ public class ChatHandler implements Runnable {
     @Override
     public void run() {
         System.out.println("CALL IN ChatHandler :\nI received : " + this.message + "\nfrom " + this.ipAddress+"\nThank you");
+        //TODO update chat window
     }
 
 }
