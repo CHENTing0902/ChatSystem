@@ -3,6 +3,7 @@ package com.insa.Message;
 import com.insa.model.Node;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 
 public class MessageFactory {
 
@@ -50,7 +51,7 @@ public class MessageFactory {
         callMessageTraiter(new String(type), new String(data));
     }
 
-    private void callMessageTraiter(String type, String data){
+    private void callMessageTraiter(String type, String data) throws UnknownHostException {
         System.out.println (type);
 
         MessageType messageType = MessageType.valueOf(type);
@@ -58,8 +59,19 @@ public class MessageFactory {
         switch (messageType){
             case JOIN :
                 System.out.println ("case join");
-                Thread t = new Thread(new BroadcastMessageHandler(node,data,ipaddress,port));
-                t.start();
+                Thread joinThread = new Thread(new JoinHandler(node,data,ipaddress,port));
+                joinThread.start();
+                break;
+            case MESS :
+                //TODO messageHandler
+                System.out.println ("case message");
+                Thread messThread = new Thread(new ChatHandler(node,data,ipaddress,port));
+                messThread .start();
+                break;
+            case INFO:
+                System.out.println ("case INFO");
+                Thread infoThread = new Thread(new InfoHandler(node,data,this.ipaddress,port));
+                infoThread .start();
                 break;
             default :
                 System.out.println("unknown type message");

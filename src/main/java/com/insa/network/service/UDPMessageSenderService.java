@@ -7,7 +7,7 @@ import com.insa.network.handler.UDPSenderHandler;
 public class UDPMessageSenderService implements MessageSenderService {
 
     @Override
-    public void sendMessageOn(Peer peer, String message) throws Exception {
+    public void sendMessageOn(Peer peer, byte[] message) throws Exception {
         Thread t = new Thread ( new UDPSenderHandler(peer, message));
         t.start();
     }

@@ -143,8 +143,13 @@ public class Chat extends JFrame {
 
     public void onSendButtonClicked(String text) {
         try {
+
             showLabel(text);
-            new UDPMessageSenderService().sendMessageOn(cible,text);
+
+            System.out.println(cible.toString());
+            new UDPMessageSenderService().sendMessageOn(cible, text.getBytes());
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }

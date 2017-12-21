@@ -8,17 +8,15 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 
-public class BroadcastListenerHandler implements Runnable {
-
-    public final static int PORT_BROADCAST = 8888 ;
+public class ListenerHandler implements Runnable {
 
     private Node node;
     private DatagramSocket datagramSocket;
     private DatagramPacket receivePacket;
 
-    public BroadcastListenerHandler(Node node) throws SocketException {
+    public ListenerHandler(Node node) throws SocketException {
         this.node = node;
-        datagramSocket = new DatagramSocket(Peer.PORT_COMMUNICATION);
+        datagramSocket = new DatagramSocket(Peer.PORT_COMMUNICATION); //6666
         this.receivePacket = new DatagramPacket(new byte[64],64);
     }
 
@@ -26,16 +24,21 @@ public class BroadcastListenerHandler implements Runnable {
         this.node = node;
     }
 
+    //TODO recuperer les nodes dans le réseau
     public void run(){
         try {
             while (true) {
                 datagramSocket.receive(receivePacket);
 
+                System.out.println(receivePacket.getData());
+
                 MessageFactory messageFactory =
                         new MessageFactory(this.node,
                                 receivePacket.getAddress().getHostAddress(),
-                                receivePacket.getPort());
+                                Peer.PORT_COMMUNICATION);// TODO getPort --> bad
                 messageFactory.sortMessage(receivePacket.getData());
+
+
             }
         } catch (IOException e) {
             e.printStackTrace();

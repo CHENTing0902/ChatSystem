@@ -1,6 +1,6 @@
 package com.insa.network;
 
-import com.insa.Model.Peer;
+import com.insa.model.Peer;
 import com.insa.network.service.UDPMessageReceiverService;
 
 public class UDPReceiverTest {

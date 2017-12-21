@@ -19,30 +19,19 @@ public class Node {
     public ArrayList<Peer> getOnlinePeers() {
         return onlinePeers;
     }
-    public void addPeer(Peer peer) {
-        this.onlinePeers.add(peer);
-    }
-
+  
     public Peer getPeer(){
         return this.peer;
-    }
-
-    public void updatePeer(Peer peer){
-        this.peer = peer;
-    }
-
-    public String toString(){
-        String str = new String ("this peer : " + this.peer.toString() + "\n" + "known peers :\n");
-        for (Peer p : onlinePeers) {
-            str += p.toString()+"\n";
-        }
-        return str;
     }
 
     public String userName(){
         return this.peer.getPseudonyme();
     }
-
+  
+    public void addPeer(Peer peer) {
+        this.onlinePeers.add(peer);
+    }
+  
     public void updatePeersList(Peer peer){
         for (int i = 0; i < onlinePeers.size(); i++){
             if (onlinePeers.get(i).getHost().equals(peer.getHost())){
@@ -57,5 +46,18 @@ public class Node {
         }
         onlinePeers.add(peer);
 
+    }
+
+    //TODO change method name updatePeer
+    public void updatePeer(Peer peer){
+        this.peer = peer;
+    }
+
+    public String toString(){
+        String str = new String ("this peer : " + this.peer.toString() + "\n" + "known peers :\n");
+        for (Peer p : onlinePeers) {
+            str += p.toString()+"\n";
+        }
+        return str;
     }
 }

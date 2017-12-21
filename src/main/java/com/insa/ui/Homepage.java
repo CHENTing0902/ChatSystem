@@ -21,6 +21,7 @@ public class Homepage extends JFrame{
         this.ui = ui;
 
         System.out.println("Node : " + this.node.toString());
+
         this.list = buildJList();
         this.listModel = new DefaultListModel<>();
         list.setModel(listModel);
