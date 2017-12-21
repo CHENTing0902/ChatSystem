@@ -1,4 +1,4 @@
-package com.insa.Model;
+package com.insa.model;
 
 import java.net.*;
 
