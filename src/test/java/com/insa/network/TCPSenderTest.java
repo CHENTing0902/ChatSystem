@@ -12,7 +12,7 @@ public class TCPSenderTest {
         Peer peer = new Peer("lili","localhost",Peer.PORT_COMMUNICATION);
 
         try {
-            new TCPMessageSenderService().sendMessageOn(peer, "lalaland");
+            new TCPMessageSenderService().sendMessageOn(peer, "lalaland".getBytes());
         } catch (Exception e) {
             e.printStackTrace();
         }
