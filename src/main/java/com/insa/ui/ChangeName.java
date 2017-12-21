@@ -63,7 +63,7 @@ public class ChangeName extends JFrame {
 
     private void onConfirmButtonClicked(String newName) {
 
-        node.getPeer().setPseudonyme(newName);
+        this.node.getPeer().setPseudonyme(newName);
 
         //TODO broadcast to all online users
         try {
@@ -74,7 +74,7 @@ public class ChangeName extends JFrame {
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             this.dispose();
 
-            homepage.setTitle("Chat System : " + this.node.getPeer().getPseudonyme().toString());
+            homepage.setTitle("Chat System : " + this.node.userName().toString());
             homepage.display();
 
         } catch (Exception e) {

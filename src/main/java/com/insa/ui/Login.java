@@ -1,7 +1,7 @@
 package com.insa.ui;
 
 import com.insa.model.*;
-import com.insa.network.handler.BroadcastListenerHandler;
+import com.insa.network.handler.ListenerHandler;
 import com.insa.network.service.UDPMessageSenderService;
 
 import javax.swing.*;
@@ -15,14 +15,14 @@ public class Login extends JFrame {
 
     private static final int DEFAULT_TEXT_FIELD_WIDTH = 10;
     private Node node;
-    private BroadcastListenerHandler broadcastListenerHandler;
+    private ListenerHandler listenerHandler;
 
     private final JTextField nameTextField = buildInputTextField();
 
     public Login(Node node) throws Exception{
         super("Login");
         this.node = node;
-        broadcastListenerHandler = new BroadcastListenerHandler(node);
+        listenerHandler = new ListenerHandler(node);
 
         JLabel chooseNameLabel = new JLabel("Choose a name for you");
         chooseNameLabel.setLabelFor(nameTextField);
@@ -72,7 +72,7 @@ public class Login extends JFrame {
         this.node.updatePeer(new Peer(name,this.node.getPeer().getHost()));
 
         System.out.println("start listen broadcast");
-        Thread listenBroadcast = new Thread(broadcastListenerHandler);
+        Thread listenBroadcast = new Thread(listenerHandler);
         listenBroadcast.start();
 
         System.out.println("udp message send broadcast");

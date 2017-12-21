@@ -1,7 +1,7 @@
 package com.insa;
 
-import com.insa.Model.Node;
-import com.insa.Model.Peer;
+import com.insa.model.Node;
+import com.insa.model.Peer;
 import com.insa.ui.Login;
 
 import java.net.InetAddress;
