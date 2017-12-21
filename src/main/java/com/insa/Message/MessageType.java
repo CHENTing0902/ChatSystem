@@ -11,4 +11,8 @@ public enum MessageType {
     MessageType (String typeAsString){
         this.typeAsString = typeAsString;
     }
+
+    public String getTypeAsString() {
+        return typeAsString;
+    }
 }
