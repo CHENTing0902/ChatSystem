@@ -2,7 +2,9 @@ package com.insa.Message;
 
 public enum MessageType {
 
-    JOIN("JOIN");
+    JOIN("JOIN"),
+    INFO("INFO"),
+    MESS("MESS");
 
     private String typeAsString;
 
