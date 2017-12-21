@@ -32,11 +32,26 @@ public class Node {
         this.onlinePeers.add(peer);
     }
 
+    public void updatePeersList(Peer peer){
+        for (int i = 0; i < onlinePeers.size(); i++){
+            if (onlinePeers.get(i).getHost().equals(peer.getHost())){
+                if (onlinePeers.get(i).getPseudonyme().equals(peer.getPseudonyme())) {
+                    return;
+                }
+                else{
+                    onlinePeers.get(i).setPseudonyme(peer.getPseudonyme());
+                    return;
+                }
+            }
+        }
+        onlinePeers.add(peer);
+
+    }
+
+    //TODO change method name updatePeer
     public void updatePeer(Peer peer){
         this.peer = peer;
     }
-
-    public void updatePeersList(Peer peer) {}
 
     public String toString(){
         String str = new String ("this peer : " + this.peer.toString() + "\n" + "known peers :\n");
