@@ -1,5 +1,6 @@
 package com.insa.network.service;
 
+import com.insa.Message.MessageType;
 import com.insa.model.Node;
 import com.insa.model.Peer;
 import com.insa.network.handler.UDPSenderHandler;
@@ -7,8 +8,8 @@ import com.insa.network.handler.UDPSenderHandler;
 public class UDPMessageSenderService implements MessageSenderService {
 
     @Override
-    public void sendMessageOn(Peer peer, byte[] message) throws Exception {
-        Thread t = new Thread ( new UDPSenderHandler(peer, message));
+    public void sendMessageOn(Peer peer, byte[] message, MessageType type) throws Exception {
+        Thread t = new Thread ( new UDPSenderHandler(peer, message, type));
         t.start();
     }
 
