@@ -19,7 +19,7 @@ public class Node {
     public ArrayList<Peer> getOnlinePeers() {
         return onlinePeers;
     }
-
+  
     public Peer getPeer(){
         return this.peer;
     }
@@ -27,11 +27,11 @@ public class Node {
     public String userName(){
         return this.peer.getPseudonyme();
     }
-
+  
     public void addPeer(Peer peer) {
         this.onlinePeers.add(peer);
     }
-
+  
     public void updatePeersList(Peer peer){
         for (int i = 0; i < onlinePeers.size(); i++){
             if (onlinePeers.get(i).getHost().equals(peer.getHost())){
@@ -60,5 +60,4 @@ public class Node {
         }
         return str;
     }
-
 }
