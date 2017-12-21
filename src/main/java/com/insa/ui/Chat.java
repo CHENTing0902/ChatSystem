@@ -147,6 +147,7 @@ public class Chat extends JFrame {
             showLabel(text);
 
             System.out.println(cible.toString());
+
             new UDPMessageSenderService().sendMessageOn(cible, text.getBytes());
 
 
