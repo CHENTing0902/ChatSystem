@@ -1,6 +1,7 @@
 package com.insa.network.handler;
 
 import com.insa.Message.Message;
+import com.insa.Message.MessageType;
 import com.insa.model.*;
 
 import java.io.IOException;
@@ -15,7 +16,11 @@ public class UDPSenderHandler implements Runnable {
 
 
     // TODO create message class
-    public UDPSenderHandler(Peer peer, byte[] c) throws IOException {
+    public UDPSenderHandler(Peer peer, byte[] d, MessageType type) throws IOException {
+
+        String cString = new String(d);
+
+        byte[] c = Message.buildMessage(type.getTypeAsString(), cString);
 
         senderSocket = new DatagramSocket();
         datagramPacket = new DatagramPacket(c,c.length);

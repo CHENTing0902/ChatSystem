@@ -1,5 +1,6 @@
 package com.insa.ui;
 
+import com.insa.Message.MessageType;
 import com.insa.model.Node;
 import com.insa.model.Peer;
 import com.insa.network.service.UDPMessageSenderService;
@@ -147,7 +148,8 @@ public class Chat extends JFrame {
             showLabel(text);
 
             System.out.println(cible.toString());
-            new UDPMessageSenderService().sendMessageOn(cible, text.getBytes());
+
+            new UDPMessageSenderService().sendMessageOn(cible, text.getBytes(), MessageType.MESS);
 
 
         } catch (Exception e) {

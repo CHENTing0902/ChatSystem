@@ -30,6 +30,7 @@ public class ListenerHandler implements Runnable {
             while (true) {
                 datagramSocket.receive(receivePacket);
 
+                System.out.println("CALL Listener handler run");
                 System.out.println(receivePacket.getData());
 
                 MessageFactory messageFactory =

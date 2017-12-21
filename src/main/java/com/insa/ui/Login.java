@@ -6,6 +6,8 @@ import com.insa.network.service.UDPMessageSenderService;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import static java.awt.BorderLayout.EAST;
 import static java.awt.BorderLayout.NORTH;
@@ -17,12 +19,27 @@ public class Login extends JFrame {
     private Node node;
     private ListenerHandler listenerHandler;
 
-    private final JTextField nameTextField = buildInputTextField();
+    private final JTextField nameTextField ;
 
     public Login(Node node) throws Exception{
+
         super("Login");
+
         this.node = node;
         listenerHandler = new ListenerHandler(node);
+        nameTextField = buildInputTextField();
+
+        nameTextField.addKeyListener(new KeyAdapter(){
+            public void keyPressed(KeyEvent ke){
+                if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
+                    try {
+                        onConfirmButtonClicked(nameTextField.getText());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
 
         JLabel chooseNameLabel = new JLabel("Choose a name for you");
         chooseNameLabel.setLabelFor(nameTextField);

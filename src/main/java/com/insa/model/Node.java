@@ -37,7 +37,7 @@ public class Node {
         if (peer.getHost().equals(this.peer.getHost())) {
             return;
         }
-        
+
         for (int i = 0; i < onlinePeers.size(); i++){
             if (onlinePeers.get(i).getHost().equals(peer.getHost())){
                 if (onlinePeers.get(i).getPseudonyme().equals(peer.getPseudonyme())) {
@@ -49,6 +49,7 @@ public class Node {
                 }
             }
         }
+      
         onlinePeers.add(peer);
 
     }
