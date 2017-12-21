@@ -33,6 +33,11 @@ public class Node {
     }
   
     public void updatePeersList(Peer peer){
+
+        if (peer.getHost().equals(this.peer.getHost())) {
+            return;
+        }
+        
         for (int i = 0; i < onlinePeers.size(); i++){
             if (onlinePeers.get(i).getHost().equals(peer.getHost())){
                 if (onlinePeers.get(i).getPseudonyme().equals(peer.getPseudonyme())) {
