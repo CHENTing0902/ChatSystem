@@ -22,12 +22,14 @@ public class Chat extends JFrame {
     private Node node;
     private Peer cible;
 
-    public Chat(Homepage homepage, Node node, int index) throws IndexOutOfBoundsException {
+    public Chat(Homepage homepage, Node node, Peer peer) throws IndexOutOfBoundsException {
         super();
 
         this.homepage = homepage;
         this.node = node;
-        this.cible = node.getOnlinePeers().get(index);
+        this.cible = peer;
+
+        this.node.setChatWindowForPeer(peer,this);
 
         setTitle("you are talking to " + this.cible.getPseudonyme());
 
@@ -115,18 +117,22 @@ public class Chat extends JFrame {
         return buttonPane;
     }
 
-    private void showLabel(String text)
-    {
+    private void showLabel(String text) {
         // If text is empty return
         if(text.trim().isEmpty()) return;
 
-        System.out.println(text);
+        System.out.println("CALL IN Chat class : "+ text);
 
         // Otherwise, append text with a new line
-        chatWindow.append(text+"\n");
+        updateChatArea(text,true);
 
         // Set textfield and label text to empty string
         messageTextField.setText("");
+    }
+
+    public void updateChatArea(String text, boolean myself){
+        if (myself) this.chatWindow.append(this.node.userName() + " >>> " + text +"\n");
+        else this.chatWindow.append(this.cible.getPseudonyme() + ">>>" + text + "\n");
     }
 
     public void display() {
@@ -139,7 +145,9 @@ public class Chat extends JFrame {
         this.setVisible(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.dispose();
-        homepage.display();
+        if (homepage != null) {
+            homepage.display();
+        }
     }
 
     public void onSendButtonClicked(String text) {
@@ -209,8 +217,10 @@ public class Chat extends JFrame {
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
+    }
 
-
+    public String toString(){
+        return "CALL IN toString of Chat class " + this.node.toString() +"are talking to " + this.cible.toString();
     }
 
 }
