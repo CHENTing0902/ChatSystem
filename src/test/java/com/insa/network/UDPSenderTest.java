@@ -1,5 +1,6 @@
 package com.insa.network;
 
+import com.insa.Message.MessageType;
 import com.insa.model.Peer;
 import com.insa.network.service.UDPMessageSenderService;
 
@@ -13,7 +14,7 @@ public class UDPSenderTest {
         Peer peer = new Peer("lili","localhost",Peer.PORT_COMMUNICATION);
 
         try {
-            new UDPMessageSenderService().sendMessageOn(peer, "lalaland".getBytes());
+            new UDPMessageSenderService().sendMessageOn(peer, "lalaland".getBytes(), MessageType.MESS);
         } catch (Exception e) {
             e.printStackTrace();
         }
