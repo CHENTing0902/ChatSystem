@@ -10,7 +10,7 @@ import java.net.SocketException;
 import java.util.Enumeration;
 
 /**
- * Hello world!
+ * Let's talk
  *
  */
 public class App {
@@ -26,24 +26,23 @@ public class App {
             login.display();
         }
 
-        public static String getAddressIP() throws SocketException {
+    public static String getAddressIP() throws SocketException {
 
-            Enumeration e = NetworkInterface.getNetworkInterfaces();
-            while (e.hasMoreElements()) {
-                NetworkInterface n = (NetworkInterface) e.nextElement();
-                Enumeration ee = n.getInetAddresses();
-                int j = 0;
+        Enumeration e = NetworkInterface.getNetworkInterfaces();
+        while (e.hasMoreElements()) {
+            NetworkInterface n = (NetworkInterface) e.nextElement();
+            Enumeration ee = n.getInetAddresses();
+            int j = 0;
 
-                while (ee.hasMoreElements()) {
-                    InetAddress i = (InetAddress) ee.nextElement();
-                    if(!i.isLoopbackAddress() && j == 1) {
-                        return i.getHostAddress();
-                    }
-                    j++;
+            while (ee.hasMoreElements()) {
+                InetAddress i = (InetAddress) ee.nextElement();
+                if(!i.isLoopbackAddress() && j == 1) {
+                    return i.getHostAddress();
                 }
+                j++;
             }
-            return null;
         }
-
+        return null;
     }
+}
 

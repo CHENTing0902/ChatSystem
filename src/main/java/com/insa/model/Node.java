@@ -1,20 +1,22 @@
 package com.insa.model;
 
+import com.insa.ui.Chat;
+
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Node {
 
     private Peer peer;
     private ArrayList<Peer> onlinePeers;
+    private HashMap<String, Chat> chatWindowForPeer;
 
     public Node(Peer peer) throws UnknownHostException {
         this.peer = peer;
-        this.onlinePeers = new ArrayList<Peer>();
-
+        this.onlinePeers = new ArrayList<>();
+        this.chatWindowForPeer = new HashMap<>();
     }
-
-    //TODO refactor node : getPseudo getHost
 
     public ArrayList<Peer> getOnlinePeers() {
         return onlinePeers;
@@ -27,35 +29,48 @@ public class Node {
     public String userName(){
         return this.peer.getPseudonyme();
     }
-  
-    public void addPeer(Peer peer) {
-        this.onlinePeers.add(peer);
+
+    public void setChatWindowForPeer(Peer peer1,Chat chat) {
+        this.chatWindowForPeer.put(peer1.getHost(),chat);
+    }
+
+    public Chat getChatWindowForPeer(String ipAddress){
+        return this.chatWindowForPeer.get(ipAddress);
     }
   
-    public void updatePeersList(Peer peer){
+    private void addPeer(Peer peer) {
+        this.onlinePeers.add(peer);
+        chatWindowForPeer.put(peer.getHost(),null);
+    }
+  
+    public void updatePeersList(Peer peer1){
 
-        if (peer.getHost().equals(this.peer.getHost())) {
+        if (peer1.getHost().equals(this.peer.getHost())) {
             return;
         }
 
-        for (int i = 0; i < onlinePeers.size(); i++){
-            if (onlinePeers.get(i).getHost().equals(peer.getHost())){
-                if (onlinePeers.get(i).getPseudonyme().equals(peer.getPseudonyme())) {
+        for (Peer peerInList : onlinePeers){
+            if (peerInList.getHost().equals(peer1.getHost())){
+                if (peerInList.getPseudonyme().equals(peer1.getPseudonyme())) {
                     return;
                 }
                 else{
-                    onlinePeers.get(i).setPseudonyme(peer.getPseudonyme());
+                    peerInList.setPseudonyme(peer1.getPseudonyme());
                     return;
                 }
             }
         }
-      
-        onlinePeers.add(peer);
-
+        this.addPeer(peer1);
     }
 
-    //TODO change method name updatePeer
-    public void updatePeer(Peer peer){
+    public Peer findPeerByIpAddress (String ipAddress){
+        for (Peer peerInList : this.onlinePeers){
+            if (peerInList.getHost().equals(ipAddress)) return peerInList;
+        }
+        return null;
+    }
+
+    public void update (Peer peer){
         this.peer = peer;
     }
 

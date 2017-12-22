@@ -1,4 +1,4 @@
-package com.insa.Message;
+package com.insa.message.messageHandler;
 
 import com.insa.model.Node;
 import com.insa.model.Peer;
