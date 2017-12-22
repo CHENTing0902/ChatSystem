@@ -1,4 +1,7 @@
-package com.insa.Message;
+package com.insa.message;
+
+import com.insa.message.messageHandler.*;
+import com.insa.file.FileHandler;
 
 import com.insa.model.Node;
 
@@ -7,13 +10,10 @@ import java.net.UnknownHostException;
 
 public class MessageFactory {
 
-    Node node;
-    String ipaddress;
-    int port;
+    private Node node;
+    private String ipaddress;
+    private int port;
 
-    public MessageFactory(Node node){
-        this.node = node;
-    }
 
     public MessageFactory(Node node, String ipaddress, int port){
         this.node = node;
@@ -38,43 +38,43 @@ public class MessageFactory {
         for (int i = 0; i < 4; i++) type[i]= message[i];
         for (int i = 0; i < 4; i++) len[i] = message[i+4];
 
-        int intLen = Message.byteArrayToInt(len);
+        int intLen = MessageTreatment.byteArrayToInt(len);
         System.out.println(intLen);
         data = new byte[intLen];
 
         for (int i=0; i<data.length; i++) data[i] = message[i+8];
 
-        String typeString = new String (type);
-        String dataString = new String (data);
-        System.out.println(typeString + " " + dataString );
-
-        callMessageTraiter(new String(type), new String(data));
+        callHandler(new String(type), data);
     }
 
-    private void callMessageTraiter(String type, String data) throws UnknownHostException {
-        System.out.println (type);
+    private void callHandler(String type, byte [] data) throws UnknownHostException {
 
         MessageType messageType = MessageType.valueOf(type);
 
         switch (messageType){
             case JOIN :
-                System.out.println ("case join");
-                Thread joinThread = new Thread(new JoinHandler(node,data,ipaddress,port));
+                System.out.println ("CALL IN callHandler : case join");
+                Thread joinThread = new Thread(new JoinHandler(node,new String(data),ipaddress,port));
                 joinThread.start();
                 break;
             case MESS :
-                //TODO messageHandler
-                System.out.println ("case message");
-                Thread messThread = new Thread(new ChatHandler(node,data,ipaddress));
+                System.out.println ("CALL IN callHandler : case message");
+                Thread messThread = new Thread(new ChatHandler(node,new String(data),ipaddress));
                 messThread .start();
                 break;
             case INFO:
-                System.out.println ("case INFO");
-                Thread infoThread = new Thread(new InfoHandler(node,data,this.ipaddress,port));
+                System.out.println ("CALL IN callHandler : case INFO");
+                Thread infoThread = new Thread(new InfoHandler(node,new String(data),this.ipaddress,port));
                 infoThread .start();
                 break;
+            case FILE:
+                System.out.println ("CALL IN callHandler : case FILE");
+                Thread fileThread = new Thread(new FileHandler(node,data,this.ipaddress));
+                fileThread .start();
+                break;
+
             default :
-                System.out.println("unknown type message");
+                System.out.println("CALL IN callHandler : unknown type message");
                 break;
         }
     }
