@@ -3,6 +3,7 @@ package com.insa.ui;
 import com.insa.Message.MessageType;
 import com.insa.model.Node;
 import com.insa.model.Peer;
+import com.insa.network.service.TCPMessageSenderService;
 import com.insa.network.service.UDPMessageSenderService;
 
 import javax.swing.*;
@@ -142,6 +143,7 @@ public class Chat extends JFrame {
     }
 
     public void onCloseDialogueButtonClicked() {
+        this.node.setChatWindowForPeer(cible,null);
         this.setVisible(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.dispose();
@@ -157,8 +159,7 @@ public class Chat extends JFrame {
 
             System.out.println(cible.toString());
 
-            new UDPMessageSenderService().sendMessageOn(cible, text.getBytes(), MessageType.MESS);
-
+            new TCPMessageSenderService().sendMessageOn(cible, text.getBytes(), MessageType.MESS);
 
         } catch (Exception e) {
             e.printStackTrace();

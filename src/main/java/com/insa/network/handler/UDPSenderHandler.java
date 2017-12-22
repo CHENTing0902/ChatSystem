@@ -39,7 +39,7 @@ public class UDPSenderHandler implements Runnable {
         senderSocket = new DatagramSocket();
         datagramPacket = new DatagramPacket(c,c.length);
         datagramPacket.setAddress(InetAddress.getByName("255.255.255.255"));
-        datagramPacket.setPort(Peer.PORT_COMMUNICATION); //6666
+        datagramPacket.setPort(Peer.PORT_UDP); //6666
     }
 
     @Override

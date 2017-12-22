@@ -1,7 +1,7 @@
 package com.insa.ui;
 
 import com.insa.model.*;
-import com.insa.network.handler.ListenerHandler;
+import com.insa.network.handler.UDPListenerHandler;
 import com.insa.network.service.UDPMessageSenderService;
 
 import javax.swing.*;
@@ -17,7 +17,6 @@ public class Login extends JFrame {
 
     private static final int DEFAULT_TEXT_FIELD_WIDTH = 10;
     private Node node;
-    private ListenerHandler listenerHandler;
 
     private final JTextField nameTextField ;
 
@@ -26,7 +25,7 @@ public class Login extends JFrame {
         super("Login");
 
         this.node = node;
-        listenerHandler = new ListenerHandler(node);
+
         nameTextField = buildInputTextField();
 
         nameTextField.addKeyListener(new KeyAdapter(){
@@ -89,8 +88,10 @@ public class Login extends JFrame {
         this.node.updatePeer(new Peer(name,this.node.getPeer().getHost()));
 
         System.out.println("start listen broadcast");
-        Thread listenBroadcast = new Thread(listenerHandler);
-        listenBroadcast.start();
+        Thread udpListenBroadcast = new Thread(new UDPListenerHandler(node));
+        Thread tcpListenBroadcast = new Thread(new UDPListenerHandler(node));
+        udpListenBroadcast.start();
+        tcpListenBroadcast.start();
 
         System.out.println("udp message send broadcast");
         new UDPMessageSenderService().sendBroadcast(node);

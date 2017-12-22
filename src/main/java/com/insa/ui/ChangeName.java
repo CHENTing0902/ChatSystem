@@ -6,6 +6,8 @@ import com.insa.network.service.UDPMessageSenderService;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import static java.awt.BorderLayout.EAST;
 import static java.awt.BorderLayout.NORTH;
@@ -32,6 +34,18 @@ public class ChangeName extends JFrame {
 
         JButton confirmButton = new JButton("Confirm");
         confirmButton.addActionListener(e -> onConfirmButtonClicked(chooseNameTextField.getText()));
+
+        chooseNameTextField.addKeyListener(new KeyAdapter(){
+            public void keyPressed(KeyEvent ke){
+                if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
+                    try {
+                        onConfirmButtonClicked(chooseNameTextField.getText());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
 
         Panel formPanel = new Panel();
         formPanel.add(chooseNameLabel);
