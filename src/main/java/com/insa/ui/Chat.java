@@ -1,6 +1,6 @@
 package com.insa.ui;
 
-import com.insa.Message.MessageType;
+import com.insa.message.MessageType;
 import com.insa.model.Node;
 import com.insa.model.Peer;
 import com.insa.network.service.TCPMessageSenderService;
@@ -11,6 +11,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -18,10 +21,13 @@ public class Chat extends JFrame {
 
     private JTextArea chatWindow;
     private JTextField messageTextField;
+    private JTextField notiTextField;
 
     private Homepage homepage;
     private Node node;
     private Peer cible;
+    private File file;
+    private boolean fileChosen = false;
 
     public Chat(Homepage homepage, Node node, Peer peer) throws IndexOutOfBoundsException {
         super();
@@ -29,6 +35,7 @@ public class Chat extends JFrame {
         this.homepage = homepage;
         this.node = node;
         this.cible = peer;
+        this.file = null;
 
         this.node.setChatWindowForPeer(peer,this);
 
@@ -54,13 +61,13 @@ public class Chat extends JFrame {
 
         chatWindow.setEditable(false);
 
+        this.notiTextField = new JTextField();
+        notiTextField.setEditable(false);
+
         JScrollPane jScrollPanel = new JScrollPane(chatWindow);
 
-        JButton sendPictureButton = new JButton("Send Picture");
-        sendPictureButton.addActionListener(e -> onSendPictureButtonClicked());
-
-        JButton sendFileButton = new JButton("Send File");
-        sendFileButton.addActionListener(e -> onSendFileButtonClicked());
+        JButton sendFileButton = new JButton("Choose File");
+        sendFileButton.addActionListener(e -> onChooseFileButtonClicked());
 
         JButton sendButton = new JButton("Send");
         sendButton.addActionListener(e -> onSendButtonClicked(messageTextField.getText()));
@@ -68,7 +75,7 @@ public class Chat extends JFrame {
         JButton closeDialogueButton = new JButton("Close Dialogue");
         closeDialogueButton.addActionListener(e -> onCloseDialogueButtonClicked());
 
-        JPanel buttonPane = buildJPanelWith(sendPictureButton, sendFileButton, sendButton, closeDialogueButton);
+        JPanel buttonPane = buildJPanelWith(sendFileButton, sendButton, closeDialogueButton);
         add(buttonPane, BorderLayout.PAGE_END);
 
         GroupLayout layout = new GroupLayout(getContentPane());
@@ -79,6 +86,7 @@ public class Chat extends JFrame {
                         .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                         .addComponent(jScrollPanel, GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+                                        .addComponent(notiTextField)
                                         .addComponent(messageTextField)
                                         .addComponent(buttonPane, GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
                         )
@@ -91,6 +99,9 @@ public class Chat extends JFrame {
                                         .addComponent(jScrollPanel, GroupLayout.Alignment.LEADING))
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(notiTextField))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(messageTextField))
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
@@ -101,15 +112,12 @@ public class Chat extends JFrame {
 
         messageTextField.requestFocus();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
     }
 
-    private static JPanel buildJPanelWith(JButton sendPictureButton, JButton sendFileButton, JButton SendButton,
-                                          JButton closeDialogueButton) {
+    private static JPanel buildJPanelWith(JButton sendFileButton, JButton SendButton, JButton closeDialogueButton) {
         JPanel buttonPane = new JPanel();
         buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
 
-        buttonPane.add(sendPictureButton);
         buttonPane.add(sendFileButton);
         buttonPane.add(SendButton);
         buttonPane.add(closeDialogueButton);
@@ -159,14 +167,27 @@ public class Chat extends JFrame {
 
             System.out.println(cible.toString());
 
-            new TCPMessageSenderService().sendMessageOn(cible, text.getBytes(), MessageType.MESS);
+            new UDPMessageSenderService().sendMessageOn(cible, text.getBytes(), MessageType.MESS);
+
+            if (this.fileChosen) {
+                byte[] fileAsByte = new byte[(int) file.length()];
+                FileInputStream fis = new FileInputStream(file);
+                fis.read(fileAsByte); //read file into bytes[]
+                fis.close();
+                if (file != null) {
+                    new UDPMessageSenderService().sendMessageOn(cible, fileAsByte, MessageType.FILE);
+                    this.fileChosen = false;
+                    this.file = null;
+                    this.notiTextField.setText("");
+                }
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void onSendFileButtonClicked() {
+    public void onChooseFileButtonClicked() {
 
         JFileChooser chooser = new JFileChooser();
 
@@ -176,48 +197,10 @@ public class Chat extends JFrame {
                     chooser.getSelectedFile().getName());
         }
 
-        File file = chooser.getSelectedFile();
+        this.file = chooser.getSelectedFile();
+        this.notiTextField.setText(file.getName());
 
-        try {
-            if (file != null) {
-                System.out.println("file chosen");
-                InetAddress ip = InetAddress.getLocalHost();
-                int port = 12345;
-                System.out.println("ready");
-//                node.getPeer().sendFile(file, ip, port);
-                System.out.println("send");
-            }
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void onSendPictureButtonClicked() {
-
-        JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                "JPG & GIF Images", "jpg", "gif");
-        chooser.setFileFilter(filter);
-        int returnVal = chooser.showOpenDialog(null);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
-            System.out.println("You chose to open this file: " +
-                    chooser.getSelectedFile().getName());
-        }
-
-        File file = chooser.getSelectedFile();
-
-        try {
-            if (file != null) {
-                System.out.println("file chosen");
-                InetAddress ip = InetAddress.getLocalHost();
-                int port = 12345;
-                System.out.println("ready");
-//                node.getPeer().sendFile(file, ip, port);
-                System.out.println("send");
-            }
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
+        this.fileChosen = true;
     }
 
     public String toString(){

@@ -79,7 +79,6 @@ public class ChangeName extends JFrame {
 
         this.node.getPeer().setPseudonyme(newName);
 
-        //TODO broadcast to all online users
         try {
 
             new UDPMessageSenderService().sendBroadcast(this.node);

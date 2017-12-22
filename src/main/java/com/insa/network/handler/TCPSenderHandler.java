@@ -1,7 +1,7 @@
 package com.insa.network.handler;
 
-import com.insa.Message.Message;
-import com.insa.Message.MessageType;
+import com.insa.message.MessageTreatment;
+import com.insa.message.MessageType;
 import com.insa.model.Peer;
 
 import java.io.IOException;
@@ -16,9 +16,7 @@ public class TCPSenderHandler implements Runnable {
 
     public TCPSenderHandler(Peer peer, byte [] message, MessageType type) throws IOException {
 
-        String cString = new String(message);
-
-        byte[] c = Message.buildMessage(type.getTypeAsString(), cString);
+        byte[] c = MessageTreatment.buildMessage(type.getTypeAsString(), message);
 
         this.chatSocket = new Socket (peer.getHost(), peer.getPort());
         this.writer = new PrintWriter(chatSocket.getOutputStream());

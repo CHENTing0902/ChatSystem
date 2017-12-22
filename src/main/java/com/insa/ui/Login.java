@@ -85,13 +85,13 @@ public class Login extends JFrame {
 
     private void onConfirmButtonClicked(String name) throws Exception {
 
-        this.node.updatePeer(new Peer(name,this.node.getPeer().getHost()));
+        this.node.update(new Peer(name,this.node.getPeer().getHost()));
 
         System.out.println("start listen broadcast");
         Thread udpListenBroadcast = new Thread(new UDPListenerHandler(node));
-        Thread tcpListenBroadcast = new Thread(new UDPListenerHandler(node));
+        //Thread tcpListenBroadcast = new Thread(new TCPListenerHandler(node));
         udpListenBroadcast.start();
-        tcpListenBroadcast.start();
+        //tcpListenBroadcast.start();
 
         System.out.println("udp message send broadcast");
         new UDPMessageSenderService().sendBroadcast(node);

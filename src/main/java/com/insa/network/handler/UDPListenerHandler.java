@@ -1,6 +1,6 @@
 package com.insa.network.handler;
 
-import com.insa.Message.MessageFactory;
+import com.insa.message.MessageFactory;
 import com.insa.model.*;
 
 import java.io.IOException;
@@ -17,7 +17,7 @@ public class UDPListenerHandler implements Runnable {
     public UDPListenerHandler(Node node) throws SocketException {
         this.node = node;
         datagramSocket = new DatagramSocket(Peer.PORT_UDP); //6666
-        this.receivePacket = new DatagramPacket(new byte[64],64);
+        this.receivePacket = new DatagramPacket(new byte[10000],10000);
     }
 
     public void run(){
@@ -25,8 +25,8 @@ public class UDPListenerHandler implements Runnable {
             while (true) {
                 datagramSocket.receive(receivePacket);
 
-                System.out.println("CALL UDP Listener handler run");
-                System.out.println(receivePacket.getData());
+                System.out.println("CALL IN UDP Listener handler run" +
+                        receivePacket.getData());
 
                 MessageFactory messageFactory =
                         new MessageFactory(this.node,

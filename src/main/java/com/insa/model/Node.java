@@ -14,11 +14,9 @@ public class Node {
 
     public Node(Peer peer) throws UnknownHostException {
         this.peer = peer;
-        this.onlinePeers = new ArrayList<Peer>();
+        this.onlinePeers = new ArrayList<>();
         this.chatWindowForPeer = new HashMap<>();
     }
-
-    //TODO refactor node : getPseudo getHost
 
     public ArrayList<Peer> getOnlinePeers() {
         return onlinePeers;
@@ -73,8 +71,7 @@ public class Node {
         return null;
     }
 
-    //TODO change method name updatePeer
-    public void updatePeer(Peer peer){
+    public void update (Peer peer){
         this.peer = peer;
     }
 

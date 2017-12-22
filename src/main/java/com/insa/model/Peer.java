@@ -34,10 +34,6 @@ public class Peer {
         return pseudonyme;
     }
 
-    public void setHost(String host){
-        this.host = host;
-    }
-
     public String getHost(){
         return this.host;
     }
