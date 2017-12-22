@@ -21,9 +21,7 @@ public class JoinHandler implements Runnable {
 
             this.node.updatePeersList(peer);
 
-            byte [] respond = Message.buildMessage("INFO",this.node.userName());
-
-            new UDPMessageSenderService().sendMessageOn(peer,respond);
+            new UDPMessageSenderService().sendMessageOn(peer,this.node.userName().getBytes(),MessageType.INFO);
 
             System.out.println ("RECEIVED : " + peer.toString());
 
