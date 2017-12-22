@@ -1,7 +1,6 @@
-package com.insa.Message;
+package com.insa.message.messageHandler;
 
-import com.insa.model.Node;
-import com.insa.model.Peer;
+import com.insa.model.*;
 import com.insa.ui.Chat;
 import com.insa.ui.Noti;
 
@@ -19,7 +18,7 @@ public class ChatHandler implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("CALL IN ChatHandler :\nI received : " + this.message + "\nfrom " + this.ipAddress+"\nThank you");
+        System.out.println("CALL IN ChatHandler :\nReceived : " + this.message + "\nfrom " + this.ipAddress+"\n");
 
         Chat chat = this.node.getChatWindowForPeer(ipAddress);
 
