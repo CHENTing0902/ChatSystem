@@ -60,7 +60,6 @@ public class Node {
                 }
             }
         }
-
         this.addPeer(peer1);
     }
 
