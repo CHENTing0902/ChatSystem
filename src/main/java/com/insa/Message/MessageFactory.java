@@ -65,7 +65,7 @@ public class MessageFactory {
             case MESS :
                 //TODO messageHandler
                 System.out.println ("case message");
-                Thread messThread = new Thread(new ChatHandler(node,data,ipaddress,port));
+                Thread messThread = new Thread(new ChatHandler(node,data,ipaddress));
                 messThread .start();
                 break;
             case INFO:
