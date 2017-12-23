@@ -21,7 +21,7 @@ public class FileHandler implements Runnable {
         System.out.println("CALL IN FileHandler :\nReceived a file from " + this.ipAddress + "\n");
 
         try {
-            FileOutputStream fos = new FileOutputStream("/home/tn_van/Bureau/file.pdf");
+            FileOutputStream fos = new FileOutputStream("/home/xin/Bureau/file.pdf");
             fos.write(fileAsByte);
             fos.close();
 

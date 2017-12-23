@@ -10,9 +10,9 @@ public class Node {
 
     private Peer peer;
     private ArrayList<Peer> onlinePeers;
-    private HashMap<String, Chat> chatWindowForPeer;
+    private HashMap<String, Chat> chatWindowForPeer;//String -> ipAddress
 
-    public Node(Peer peer) throws UnknownHostException {
+    public Node(Peer peer) {
         this.peer = peer;
         this.onlinePeers = new ArrayList<>();
         this.chatWindowForPeer = new HashMap<>();

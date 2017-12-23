@@ -62,6 +62,7 @@ public class Chat extends JFrame {
         chatWindow.setEditable(false);
 
         this.notiTextField = new JTextField();
+        notiTextField.setText("Chatting !!!");
         notiTextField.setEditable(false);
 
         JScrollPane jScrollPanel = new JScrollPane(chatWindow);
@@ -170,12 +171,8 @@ public class Chat extends JFrame {
             new UDPMessageSenderService().sendMessageOn(cible, text.getBytes(), MessageType.MESS);
 
             if (this.fileChosen) {
-                byte[] fileAsByte = new byte[(int) file.length()];
-                FileInputStream fis = new FileInputStream(file);
-                fis.read(fileAsByte); //read file into bytes[]
-                fis.close();
                 if (file != null) {
-                    new UDPMessageSenderService().sendMessageOn(cible, fileAsByte, MessageType.FILE);
+                    new UDPMessageSenderService().sendFileOn(cible, file);
                     this.fileChosen = false;
                     this.file = null;
                     this.notiTextField.setText("");
