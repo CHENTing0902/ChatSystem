@@ -1,25 +1,26 @@
 package com.insa.network.handler;
 
+import com.insa.message.MessageFactory;
+import com.insa.model.Node;
 import com.insa.model.Peer;
-import com.insa.network.IncomingMessageListener;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class TCPReceiverHandler implements  Runnable{
+public class TCPListenerHandler implements  Runnable{
 
+    Node node;
     ServerSocket serverSocket;
     Socket chatSocket;
     BufferedInputStream stream;
-    IncomingMessageListener incomingMessageListener;
 
-    public TCPReceiverHandler(IncomingMessageListener incomingMessageListener) throws IOException {
-        serverSocket = new ServerSocket(Peer.PORT_COMMUNICATION);
+    public TCPListenerHandler(Node node) throws IOException {
+        this.node = node;
+        serverSocket = new ServerSocket(Peer.PORT_TCP);
         chatSocket = serverSocket.accept();
         stream = new BufferedInputStream(chatSocket.getInputStream());
-        this.incomingMessageListener = incomingMessageListener;
     }
 
     @Override
@@ -27,9 +28,15 @@ public class TCPReceiverHandler implements  Runnable{
         try{
             byte[] message = new byte[50];
             int lenMessage = stream.read(message);
-            System.out.println(lenMessage);
-            incomingMessageListener.onNewIncomingMessage(message);
 
+            System.out.println("CALL IN TCP Listener handler run");
+
+            MessageFactory messageFactory =
+                    new MessageFactory(this.node,
+                            chatSocket.getInetAddress().getHostAddress(),
+                            Peer.PORT_TCP);
+            messageFactory.sortMessage(message);
+            stream.close();
             serverSocket.close();
         } catch (IOException e) {
             e.printStackTrace();

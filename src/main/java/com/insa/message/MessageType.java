@@ -1,10 +1,11 @@
-package com.insa.Message;
+package com.insa.message;
 
 public enum MessageType {
 
     JOIN("JOIN"),
     INFO("INFO"),
-    MESS("MESS");
+    MESS("MESS"),
+    FILE("FILE");
 
     private String typeAsString;
 

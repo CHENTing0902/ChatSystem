@@ -91,7 +91,6 @@ public class Homepage extends JFrame{
         list.setModel(listModel);
     }
 
-    //TODO address already in use
     private void onChangeNameButtonClicked() {
         this.setVisible(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -111,15 +110,16 @@ public class Homepage extends JFrame{
             JOptionPane.showMessageDialog(this, "alert", "You should choose a user!", JOptionPane.ERROR_MESSAGE);
         }
         else {
+
             this.setVisible(false);
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+
+            Peer peer = node.getOnlinePeers().get(list.getSelectedIndex());
             this.dispose();
 
-            int index ;
-            index = list.getSelectedIndex();
-            Chat chat = new Chat(this, node, index);
+            Chat chat = new Chat(this, node, peer);
             chat.display();
-
         }
 
     }
@@ -131,7 +131,6 @@ public class Homepage extends JFrame{
     public void setNode(Node node) {
         this.node = node;
     }
-    //TODO choisir le nom et commencer la conversation
 
 }
 

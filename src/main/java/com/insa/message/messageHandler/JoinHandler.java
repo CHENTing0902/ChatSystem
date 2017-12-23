@@ -1,5 +1,6 @@
-package com.insa.Message;
+package com.insa.message.messageHandler;
 
+import com.insa.message.MessageType;
 import com.insa.model.*;
 import com.insa.network.service.UDPMessageSenderService;
 
@@ -21,11 +22,9 @@ public class JoinHandler implements Runnable {
 
             this.node.updatePeersList(peer);
 
-            byte [] respond = Message.buildMessage("INFO",this.node.userName());
+            new UDPMessageSenderService().sendMessageOn(peer,this.node.userName().getBytes(), MessageType.INFO);
 
-            new UDPMessageSenderService().sendMessageOn(peer,respond);
-
-            System.out.println ("RECEIVED : " + peer.toString());
+            System.out.println ("CALL IN JoinHandler :\nRECEIVED : " + peer.toString());
 
         } catch (IOException e) {
             e.printStackTrace();

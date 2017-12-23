@@ -1,28 +1,24 @@
-package com.insa.Message;
+package com.insa.message;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class Message {
+public class MessageTreatment {
 
     byte[] type;
     byte[] data;
 
-    public Message(byte[] type, byte[] data){
+    public MessageTreatment(byte[] type, byte[] data){
         this.type = type;
         this.data = data;
     }
 
-    public Message(String type, String data) {
-        this(type.getBytes(), data.getBytes());
-    }
-
-    public Message(byte[] message) throws IOException {
+    public MessageTreatment(byte[] message) throws IOException {
         if (message.length < 4){
-            throw new IOException("EOF in Message constructor : type");
+            throw new IOException("EOF in MessageTreatment constructor : type");
         }
         if (message.length < 8){
-            throw new IOException("EOF in Message constructor : len data");
+            throw new IOException("EOF in MessageTreatment constructor : len data");
         }
 
         type = new byte[4];
@@ -38,14 +34,8 @@ public class Message {
     }
 
     public String getMsgType() {return new String(type);}
-    public byte[] getMsgTypeBytes() {
-        return (byte[])type.clone();
-    }
     public String getMsgData() {
         return new String(data);
-    }
-    public byte[] getMsgDataBytes() {
-        return (byte[])data.clone();
     }
     public byte[] toBytes() {
         byte[] bytes = new byte[4 + 4 + data.length];
@@ -59,7 +49,7 @@ public class Message {
     }
 
     public String toString() {
-        return "Message[" + getMsgType() + ":" + getMsgData() + "]";
+        return "MessageTreatment[" + getMsgType() + ":" + getMsgData() + "]";
     }
 
     public static byte[] intToByteArray (final int integer) {
@@ -80,18 +70,17 @@ public class Message {
         return integer;
     }
 
-    public static byte[] buildMessage(String type, String message) throws IOException {
+    public static byte[] buildMessage(String type, byte [] message) throws IOException {
 
         byte[] typeMessage = type.getBytes();
-        byte[] data = message.getBytes();
-        byte[] len = Message.intToByteArray(data.length);
+        byte[] len = MessageTreatment.intToByteArray(message.length);
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
-        outputStream.write( typeMessage );
-        outputStream.write( len );
-        outputStream.write( data );
+        outputStream.write(typeMessage);
+        outputStream.write(len);
+        outputStream.write(message);
 
-        return outputStream.toByteArray( );
+        return outputStream.toByteArray();
     }
 
 

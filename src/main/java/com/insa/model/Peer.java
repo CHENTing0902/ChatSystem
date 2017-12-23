@@ -4,7 +4,8 @@ import java.net.*;
 
 public class Peer {
 
-    public final static int PORT_COMMUNICATION = 6666 ;
+    public final static int PORT_UDP = 6666 ;
+    public final static int PORT_TCP = 8888 ;
 
     private String pseudonyme;
     private String host;
@@ -12,13 +13,13 @@ public class Peer {
 
     public Peer(String host) throws UnknownHostException {
         this.host = host;
-        this.port = PORT_COMMUNICATION;
+        this.port = PORT_UDP;
     }
 
     public Peer(String pseudonyme, String host) throws UnknownHostException {
         this.pseudonyme = pseudonyme;
         this.host = host;
-        this.port = PORT_COMMUNICATION;
+        this.port = PORT_UDP;
     }
 
     public Peer(String pseudonyme, String host, int port) throws UnknownHostException {
@@ -31,10 +32,6 @@ public class Peer {
 
     public String getPseudonyme() {
         return pseudonyme;
-    }
-
-    public void setHost(String host){
-        this.host = host;
     }
 
     public String getHost(){
