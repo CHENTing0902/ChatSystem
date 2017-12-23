@@ -47,7 +47,7 @@ public class MessageFactory {
         callHandler(new String(type), data);
     }
 
-    private void callHandler(String type, byte [] data) throws UnknownHostException {
+    public void callHandler(String type, byte [] data) throws UnknownHostException {
 
         MessageType messageType = MessageType.valueOf(type);
 

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ClavardageProjet.iml" filepath="$PROJECT_DIR$/ClavardageProjet.iml" />
+      <module fileurl="file://$PROJECT_DIR$/clavardage-projet.iml" filepath="$PROJECT_DIR$/clavardage-projet.iml" />
     </modules>
   </component>
 </project>

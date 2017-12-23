@@ -38,7 +38,7 @@ public class Node {
         return this.chatWindowForPeer.get(ipAddress);
     }
   
-    private void addPeer(Peer peer) {
+    public void addPeer(Peer peer) {
         this.onlinePeers.add(peer);
         chatWindowForPeer.put(peer.getHost(),null);
     }
